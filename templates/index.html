@@ -1,8 +1,33 @@
-$def with (decks, form)
+$def with (date_obj)
 
-$var title: Deck List
+$code:
+    first_day = 1
 
 <div class="span12">
     $# Create the table
-    $for
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 14%">Sunday</th>
+                <th style="width: 14%">Monday</th>
+                <th style="width: 14%">Tuesday</th>
+                <th style="width: 14%">Wednesday</th>
+                <th style="width: 14%">Thursday</th>
+                <th style="width: 14%">Friday</th>
+                <th style="width: 14%">Saturday</th>
+            <tr>
+        </thead>
+        <tbody>
+        $for i in range(0,6):
+            <tr style="height: 90px">
+                <td id="sun$i"></td>
+                <td id="mon$i"></td>
+                <td id="tue$i"></td>
+                <td id="wed$i"></td>
+                <td id="thu$i"></td>
+                <td id="fri$i"></td>
+                <td id="sat$i"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
