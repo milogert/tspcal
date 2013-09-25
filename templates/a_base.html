@@ -1,0 +1,77 @@
+$def with (page)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calendar</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/3.2.0/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Custom style sheet. -->
+    <style>
+        .h { display: none; }
+        body { padding-top: 30px; }
+        label input[type="checkbox"] { min-height: 20px; padding-left: 20px; }
+        .symbol {display: inline; max-height: 18px; }
+    </style>
+
+    <!-- Scripts -->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="navbar" id="navbar"><div class="navbar-inner">
+        <a class="brand" href="/">Calendar</a>
+        <ul class="nav">
+            <li><a href="#">Utilities</a></li>
+        </ul>
+
+        <ul class="nav pull-right">
+            <!--Holder-->
+        </ul>
+    </div></div>
+
+    <div class="row">
+        $:page
+    </div>
+
+    <div class="row">
+        <div class="span12 text-center lead">
+            <a href="#about" data-toggle="modal">About</a> |
+            <a href="http://twitter.github.io/bootstrap/index.html">Bootstrap</a> |
+            <a href="http://python.org">Python</a> |
+            <a href="http://webpy.org">Web.py</a>
+        </div>
+
+        <div class="modal hide fade" id="about" role="dialog" aria-labelledby="about" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>MTG Deck Keeper.</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Built by Milo Gertjejansen</p>
+                <p>For keeping decks and records of those decks.</p>
+                <p>Created for personal use and for anyone who finds it.</p>
+            </div>
+
+            <div class="modal-footer">
+                <a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">OK</a>
+            </div>
+        </div>
+    </div> <!-- footer -->
+</div> <!-- container -->
+
+</body>
+</html>
