@@ -1,9 +1,43 @@
-$def with (date_obj)
+$def with (date_obj, today, cal)
 
 $code:
-    first_day = 1
+    first_day = date_obj.weekday(date_obj(today.year, today.month, 1)) + 1
+    if first_day is 7:
+        first_day = 0
+    first_day_str = {0: "sun", 1: "mon", 2: "tue", 3: "wed", 4: "thu", 5: "fri", 6: "sat"}[first_day]
+    cal2 = cal.Calendar(6)
+    month_iter = cal2.itermonthdays(today.year, today.month)
 
-<div class="span12">
+
+<div class="col-md-2">
+    <div class="btn-group pull-left" style="padding-top: 18px">
+        <a class="btn btn-default" href="/prev_year">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="btn btn-default" href="/prev_month">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+</div>
+
+<div class="col-md-8">
+    <h1 class="text-center">$cal.month_name[today.month] - $today.year</h1>
+</div>
+
+<div class="col-md-2">
+    <div class="btn-group pull-right" style="padding-top: 18px">
+        <a class="btn btn-default" href="/next_month">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+        <a class="btn btn-default" href="/next_year">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+</div>
+
+<div class="col-md-12">
     $# Create the table
     <table class="table table-bordered">
         <thead>
@@ -18,16 +52,39 @@ $code:
             <tr>
         </thead>
         <tbody>
-        $for i in range(0,6):
             <tr style="height: 90px">
-                <td id="sun$i"></td>
-                <td id="mon$i"></td>
-                <td id="tue$i"></td>
-                <td id="wed$i"></td>
-                <td id="thu$i"></td>
-                <td id="fri$i"></td>
-                <td id="sat$i"></td>
+            <!-- Blank days. -->
+            $ count = first_day
+            $for i in range(0, first_day):
+                <td id="blank$i"></td>
+                $if first_day == 6:
+                    </tr><tr style="height: 90px">
+            $for i, d in enumerate(month_iter):
+                $if d != 0:
+                    <td id="day$i">$d</td>
+                $else:
+                    <td id="day$i"></td>
+                $ count += 1
+                $if count % 7 is 0:
+                    </tr><tr style="height: 90px">
             </tr>
         </tbody>
     </table>
+
+    $# Generate the selector.
+    $code:
+        #first_day_str = {0: "sun", 1: "mon", 2: "tue", 3: "wed", 4: "thu", 5: "fri", 6: "sat"}[first_day]
+        #week_num = (today.day - 1) // 7 + 1
+        selector = first_day_str + "0"
+
+    <script>
+    function add_data(s, d) {
+        jQuery(s).html(d);
+    }
+
+    //jQuery($selector).nextUntil
+    </script>
+
+
+
 </div>

@@ -6,13 +6,17 @@ import config
 import model
 from view import render as render
 from datetime import date
+import calendar
 
 class Index:
 
     def GET(self):
         """Show index."""
-        d = date
-        return render.index(d)
+        date_obj = date
+        today = date.today()
+        # Make Sunday the first day.
+        cal = calendar
+        return render.index(date_obj, today, cal)
 
 config.app.internalerror = web.debugerror
 #application = config.app.wsgifunc()
