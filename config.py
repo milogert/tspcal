@@ -9,6 +9,7 @@ import db
 ## Webpy Variables
 urls = (
     '/', 'main.Index',
+    '/new', 'main.New',
     '/view/(\d+)', 'main.View',
     '/delete/(\d+)', 'main.Delete',
     '/edit/(\d+)', 'main.Edit'

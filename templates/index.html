@@ -1,4 +1,4 @@
-$def with (date_obj, today, cal)
+$def with (date_obj, today, cal, events)
 
 $code:
     first_day = date_obj.weekday(date_obj(today.year, today.month, 1)) + 1
@@ -53,38 +53,28 @@ $code:
         </thead>
         <tbody>
             <tr style="height: 90px">
-            <!-- Blank days. -->
             $ count = first_day
             $for i in range(0, first_day):
                 <td id="blank$i"></td>
                 $if first_day == 6:
                     </tr><tr style="height: 90px">
+
             $for i, d in enumerate(month_iter):
-                $if d != 0:
-                    <td id="day$i">$d</td>
+                $if today.day == d:
+                    <td id="day$i" style="background: #DFECFF;">
                 $else:
-                    <td id="day$i"></td>
+                    <td id="day$i">
+                
+                $if d != 0:
+                    <div style="width: inherit;"><b>$d</b></div>
+                $for event in events:
+                    $if d == event.day and today.month == event.month and today.year == event.year:
+                        <a href="/view/$event.id">$event.title</a>
+                </td>
                 $ count += 1
                 $if count % 7 is 0:
-                    </tr><tr style="height: 90px">
+                    </tr><tr style="height: 100px">
             </tr>
         </tbody>
     </table>
-
-    $# Generate the selector.
-    $code:
-        #first_day_str = {0: "sun", 1: "mon", 2: "tue", 3: "wed", 4: "thu", 5: "fri", 6: "sat"}[first_day]
-        #week_num = (today.day - 1) // 7 + 1
-        selector = first_day_str + "0"
-
-    <script>
-    function add_data(s, d) {
-        jQuery(s).html(d);
-    }
-
-    //jQuery($selector).nextUntil
-    </script>
-
-
-
 </div>
