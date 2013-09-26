@@ -69,7 +69,8 @@ $code:
                     <div style="width: inherit;"><b>$d</b></div>
                 $for event in events:
                     $if d == event.day and today.month == event.month and today.year == event.year:
-                        <a href="/view/$event.id">$event.title</a>
+                        <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.time</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p>" data-placement="auto">$event.title</a>
+
                 </td>
                 $ count += 1
                 $if count % 7 is 0:
@@ -77,4 +78,17 @@ $code:
             </tr>
         </tbody>
     </table>
+    <script>
+        jQuery("a.event").popover();
+
+        jQuery('body').on('click', function (e) {
+            jQuery('.event').each(function () {
+                //the 'is' for buttons that trigger popups
+                //the 'has' for icons within a button that triggers a popup
+                if (!jQuery(this).is(e.target) && jQuery(this).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
+                    jQuery(this).popover('hide');
+                }
+            });
+        });
+    </script>
 </div>
