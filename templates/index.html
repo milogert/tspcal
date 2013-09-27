@@ -49,7 +49,7 @@ $code:
 
 <div class="col-md-12">
     $# Create the table
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="cal">
         <thead>
             <tr>
                 <th style="width: 14%">Sunday</th>
@@ -108,14 +108,15 @@ $code:
     <script>
         jQuery("a.event").popover();
 
-        /*jQuery('body').on('click', function (e) {
-            jQuery('a.event').each(function () {
-                //the 'is' for buttons that trigger popups
-                //the 'has' for icons within a button that triggers a popup
-                if (!jQuery(this).is(e.target) && jQuery(this).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
-                    jQuery(this).popover('hide');
+        jQuery(document).ready(function(){
+            jQuery('#cal').bind('mousewheel', function(e){
+                if(e.originalEvent.wheelDelta /120 > 0) {
+                    window.location = '/$year/$(month - 1)'
+                }
+                else{
+                    window.location = '/$year/$(month + 1)'
                 }
             });
-        });*/
+        });
     </script>
 </div>

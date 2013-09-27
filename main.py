@@ -26,7 +26,16 @@ class View:
         """Shows different month and year view."""
         date_obj = date
         cal = calendar
-        return render.index(date_obj, cal, int(year), int(month), model.get_events())
+        year = int(year)
+        month = int(month)
+        
+        # Reset the month and year based on going too high or too low.
+        if month is 13:
+            raise web.seeother("/" + str(year + 1) + "/1")
+        elif month is 0:
+            raise web.seeother("/" + str(year - 1) + "/12")
+        
+        return render.index(date_obj, cal, year, month, model.get_events())
 
 
 class New:
