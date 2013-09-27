@@ -9,32 +9,40 @@ $code:
     month_iter = cal2.itermonthdays(today.year, today.month)
 
 
-<div class="col-md-2">
-    <div class="btn-group pull-left">
-        <a class="btn btn-default" href="/prev_year">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-        <a class="btn btn-default" href="/prev_month">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
-    </div>
-</div>
+<div class="col-md-12">
+    <table calss="table" style="width: 100%;">
+        <tbody>
+            <tr>
+                <th style="width: 14%;">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-default" href="/prev_year">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="btn btn-default" href="/prev_month">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    </div>
+                </th>
 
-<div class="col-md-8">
-    <h1 class="text-center">$cal.month_name[today.month] - $today.year</h1>
-</div>
+                <th style="width: 72%">
+                    <h1 class="text-center">$cal.month_name[today.month] - $today.year</h1>
+                </th>
 
-<div class="col-md-2">
-    <div class="btn-group">
-        <a class="btn btn-default" href="/next_month">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-        <a class="btn btn-default" href="/next_year">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </a>
-    </div>
+                <th style="width: 14%;">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-default" href="/next_month">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                        <a class="btn btn-default" href="/next_year">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <div class="col-md-12">
@@ -100,14 +108,14 @@ $code:
     <script>
         jQuery("a.event").popover();
 
-        jQuery('body').on('click', function (e) {
-            jQuery('.event').each(function () {
+        /*jQuery('body').on('click', function (e) {
+            jQuery('a.event').each(function () {
                 //the 'is' for buttons that trigger popups
                 //the 'has' for icons within a button that triggers a popup
                 if (!jQuery(this).is(e.target) && jQuery(this).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
                     jQuery(this).popover('hide');
                 }
             });
-        });
+        });*/
     </script>
 </div>
