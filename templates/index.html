@@ -1,40 +1,42 @@
-$def with (date_obj, today, cal, events)
+$def with (date_obj, cal, year, month, events)
 
 $code:
-    first_day = date_obj.weekday(date_obj(today.year, today.month, 1)) + 1
+    today = date_obj.today()
+    first_day = date_obj.weekday(date_obj(year, month, 1)) + 1
     if first_day is 7:
         first_day = 0
     first_day_str = {0: "sun", 1: "mon", 2: "tue", 3: "wed", 4: "thu", 5: "fri", 6: "sat"}[first_day]
+    # Sudnay is 6, so start on Sunday.
     cal2 = cal.Calendar(6)
-    month_iter = cal2.itermonthdays(today.year, today.month)
+    month_iter = list(cal2.itermonthdays(year, month))
 
 
 <div class="col-md-12">
-    <table calss="table" style="width: 100%;">
+    <table style="width: 100%;">
         <tbody>
             <tr>
                 <th style="width: 14%;">
                     <div class="btn-group pull-left">
-                        <a class="btn btn-default" href="/prev_year">
+                        <a class="btn btn-default" href="/$(year - 1)/$month">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
-                        <a class="btn btn-default" href="/prev_month">
+                        <a class="btn btn-default" href="/$year/$(month - 1)">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     </div>
                 </th>
 
                 <th style="width: 72%">
-                    <h1 class="text-center">$cal.month_name[today.month] - $today.year</h1>
+                    <h1 class="text-center">$cal.month_name[month] - $year</h1>
                 </th>
 
                 <th style="width: 14%;">
                     <div class="btn-group pull-right">
-                        <a class="btn btn-default" href="/next_month">
+                        <a class="btn btn-default" href="/$year/$(month + 1)">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </a>
-                        <a class="btn btn-default" href="/next_year">
+                        <a class="btn btn-default" href="/$(year + 1)/$month">
                             <span class="glyphicon glyphicon-chevron-right"></span>
                             <span class="glyphicon glyphicon-chevron-right"></span>
                         </a>
@@ -61,14 +63,10 @@ $code:
         </thead>
         <tbody>
             <tr style="height: 90px">
-            $ count = first_day
-            $for i in range(0, first_day):
-                <td id="blank$i"></td>
-                $if first_day == 6:
-                    </tr><tr style="height: 90px">
+            $ count = 0
 
             $for i, d in enumerate(month_iter):
-                $if today.day == d:
+                $if today.day == d and today.month == month and today.year == year:
                     <td id="day$i" style="background: #DFECFF;">
                 $else:
                     <td id="day$i">
@@ -76,7 +74,7 @@ $code:
                 $if d != 0:
                     <div style="width: inherit;"><b>$d</b></div>
                 $for event in events:
-                    $if d == event.day and today.month == event.month and today.year == event.year:
+                    $if d == event.day and month == event.month and year == event.year:
                         <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.time</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p><a class='btn btn-danger' data-toggle='modal' href='#delete$event.id'>Delete Event</a>" data-placement="auto">$event.title</a>
                         <div class="modal fade" id="delete$event.id" tabindex="-1" role="dialog" aria-labelledby="delete$event.id" aria-hidden="true">
                             <div class="modal-dialog">
@@ -101,7 +99,9 @@ $code:
                 </td>
                 $ count += 1
                 $if count % 7 is 0:
-                    </tr><tr style="height: 100px">
+                    </tr>
+                    $if i != len(month_iter) - 1:
+                        <tr style="height: 100px">
             </tr>
         </tbody>
     </table>

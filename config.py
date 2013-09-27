@@ -9,10 +9,11 @@ import db
 ## Webpy Variables
 urls = (
     '/', 'main.Index',
+    '/(\d+)/(\d+)', 'main.View',
     '/new', 'main.New',
-    '/view/(\d+)', 'main.View',
     '/delete/(\d+)', 'main.Delete',
     '/edit/(\d+)', 'main.Edit'
+    
 )
 
 app = web.application(urls, globals(), autoreload=False)

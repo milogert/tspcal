@@ -1,5 +1,8 @@
 #!/usr/bin/python2
 
+import sys
+sys.path.append("/home/tsp/code")
+
 import web
 
 import config
@@ -11,13 +14,19 @@ import calendar
 
 class Index:
 
-    def GET(self):
+    def GET(self, day=date.today()):
         """Show index."""
-        date_obj = date
         today = date.today()
-        # Make Sunday the first day.
+        raise web.seeother("/" + str(today.year) + "/" + str(today.month))
+        
+        
+class View:
+
+    def GET(self, year, month):
+        """Shows different month and year view."""
+        date_obj = date
         cal = calendar
-        return render.index(date_obj, today, cal, model.get_events())
+        return render.index(date_obj, cal, int(year), int(month), model.get_events())
 
 
 class New:
