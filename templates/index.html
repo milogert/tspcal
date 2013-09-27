@@ -10,7 +10,7 @@ $code:
 
 
 <div class="col-md-2">
-    <div class="btn-group pull-left" style="padding-top: 18px">
+    <div class="btn-group pull-left">
         <a class="btn btn-default" href="/prev_year">
             <span class="glyphicon glyphicon-chevron-left"></span>
             <span class="glyphicon glyphicon-chevron-left"></span>
@@ -26,7 +26,7 @@ $code:
 </div>
 
 <div class="col-md-2">
-    <div class="btn-group pull-right" style="padding-top: 18px">
+    <div class="btn-group">
         <a class="btn btn-default" href="/next_month">
             <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
@@ -64,12 +64,31 @@ $code:
                     <td id="day$i" style="background: #DFECFF;">
                 $else:
                     <td id="day$i">
-                
+
                 $if d != 0:
                     <div style="width: inherit;"><b>$d</b></div>
                 $for event in events:
                     $if d == event.day and today.month == event.month and today.year == event.year:
-                        <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.time</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p>" data-placement="auto">$event.title</a>
+                        <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.time</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p><a class='btn btn-danger' data-toggle='modal' href='#delete$event.id'>Delete Event</a>" data-placement="auto">$event.title</a>
+                        <div class="modal fade" id="delete$event.id" tabindex="-1" role="dialog" aria-labelledby="delete$event.id" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Delete "$event.title"?</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>Do you really want to delete $event.title?</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <a class="btn btn-danger" href="/delete/$event.id">Really Delete Event</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
 
                 </td>
                 $ count += 1

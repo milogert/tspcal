@@ -36,6 +36,14 @@ class New:
         raise web.seeother("/")
 
 
+class Delete:
+
+    def GET(self, id):
+        """Delete an event with the given id."""
+        model.delete_event(id)
+        raise web.seeother("/")
+
+
 config.app.internalerror = web.debugerror
 #application = config.app.wsgifunc()
 

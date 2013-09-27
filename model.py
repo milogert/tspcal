@@ -7,6 +7,11 @@ import web
 import db
 
 
+def delete_event(id):
+    """Deletes event with the given id."""
+    db.data.delete("events", where="id=$id", vars=locals())
+
+    
 def get_events():
     """Gets all events."""
     return list(db.data.select("events", order="date ASC"))
