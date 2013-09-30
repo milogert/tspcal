@@ -62,20 +62,20 @@ $code:
             <tr>
         </thead>
         <tbody>
-            <tr style="height: 90px">
+            <tr style="height: 100px">
             $ count = 0
 
             $for i, d in enumerate(month_iter):
                 $if today.day == d and today.month == month and today.year == year:
-                    <td id="day$i" style="background: #DFECFF;">
+                    <td id="day$i" class="day" style="background: #DFECFF;">
                 $else:
-                    <td id="day$i">
+                    <td id="day$i" class="day">
 
                 $if d != 0:
-                    <div style="width: inherit;"><b>$d</b></div>
+                    <div style="width: inherit;"><b class="number">$d</b></div>
                 $for event in events:
                     $if d == event.day and month == event.month and year == event.year:
-                        <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.time</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p><a class='btn btn-danger' data-toggle='modal' href='#delete$event.id'>Delete Event</a>" data-placement="auto">$event.title</a>
+                        <a href="#" class="event" data-toggle="popover" data-title="$event.title" data-html="true" data-content="<p><b>$event.starttime</b> to <b>$event.endtime</b> on <b>$event.date</b> at <b>$event.location</b></p><p>$event.details</p><a class='btn btn-danger' data-toggle='modal' href='#delete$event.id'>Delete Event</a>" data-placement="auto">$event.title</a>
                         <div class="modal fade" id="delete$event.id" tabindex="-1" role="dialog" aria-labelledby="delete$event.id" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -108,15 +108,20 @@ $code:
     <script>
         jQuery("a.event").popover();
 
-        jQuery(document).ready(function(){
-            jQuery('#cal').bind('mousewheel', function(e){
-                if(e.originalEvent.wheelDelta /120 > 0) {
-                    window.location = '/$year/$(month - 1)'
-                }
-                else{
-                    window.location = '/$year/$(month + 1)'
-                }
-            });
+        jQuery(".day").mousewheel(function(event, delta, deltaX, deltaY){
+            //console.log(delta, deltaX, deltaY, event.currentTarget.children[0].children[0].innerHTML);
+            window.location = "/$year/$month/" + event.currentTarget.children[0].children[0].innerHTML;
         });
+
+        // jQuery(document).ready(function(){
+        //     jQuery('#cal').bind('mousewheel', function(e){
+        //         if(e.originalEvent.wheelDelta / 120 > 0) {
+        //             window.location = '/$year/$(month - 1)'
+        //         }
+        //         else{
+        //             window.location = '/$year/$(month + 1)'
+        //         }
+        //     });
+        // });
     </script>
 </div>

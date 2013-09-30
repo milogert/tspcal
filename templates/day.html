@@ -1,0 +1,61 @@
+$def with (year, month, day, cal, events)
+
+$for event in events:
+    <span>$event.time</span><br />
+
+<div class="col-md-12">
+    <table style="width: 100%;">
+        <tbody>
+            <tr>
+                <th style="width: 14%;">
+                    <div class="btn-group pull-left">
+                        <a class="btn btn-default" href="/$year/$(month - 1)/$day">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="btn btn-default" href="/$year/$month/$(day - 1)">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    </div>
+                </th>
+
+                <th style="width: 72%">
+                    <h1 class="text-center">$cal.month_name[month] $day, $year</h1>
+                </th>
+
+                <th style="width: 14%;">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-default" href="/$year/$(month + 1)">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                        <a class="btn btn-default" href="/$(year + 1)/$month">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-12">
+<table class="table">
+
+    <thead>
+        <tr><th style="width: 10%;"></th><th style="width: 90%;"></th></tr>
+    </thead>
+
+    <tbody>
+        $for i in range(0,24):
+            <tr style="height: 50px;">
+                <td>$i:00</td>
+                <td>
+                    $for event in events:
+                        $if event.time.hour == i:
+                            $event.title
+                </td>
+            </tr>
+    </tbody>
+</table>
+</div>

@@ -1,7 +1,6 @@
 #!/usr/bin/python2
 
 import sys
-sys.path.append("/home/tsp/code")
 
 import web
 
@@ -9,6 +8,7 @@ import config
 import model
 from view import render as render
 from datetime import date
+import time
 import calendar
 
 
@@ -18,8 +18,8 @@ class Index:
         """Show index."""
         today = date.today()
         raise web.seeother("/" + str(today.year) + "/" + str(today.month))
-        
-        
+
+
 class View:
 
     def GET(self, year, month):
@@ -28,14 +28,34 @@ class View:
         cal = calendar
         year = int(year)
         month = int(month)
-        
+
         # Reset the month and year based on going too high or too low.
         if month is 13:
             raise web.seeother("/" + str(year + 1) + "/1")
         elif month is 0:
             raise web.seeother("/" + str(year - 1) + "/12")
-        
-        return render.index(date_obj, cal, year, month, model.get_events())
+
+        events = model.get_month_events(year, month)
+        return render.index(date_obj, cal, year, month, events)
+
+
+class Day:
+
+    def GET(self, year, month, day):
+        """Zooms in on a specific day."""
+        year = int(year)
+        month = int(month)
+        day = int(day)
+        cal = calendar
+
+        # Reset the day/month/year if they go too high or too low.
+        if month is 13:
+            raise web.seeother("/" + str(year + 1) + "/1/1")
+        elif month is 0:
+            raise web.seeother("/" + str(year - 1) + "/12/31")
+
+        events = model.get_day_events(year, month, day)
+        return render.day(year, month, day, cal, events)
 
 
 class New:
@@ -47,7 +67,9 @@ class New:
     def POST(self):
         input = web.input()
 
-        if not input["title"] or not input["date"] or not input["time"]:
+        input["starttime"] = time.strptime(input["starttime"] + ":00", "%H:%M:%S")
+
+        if not input["title"] or not input["date"] or not input["starttime"] or not input["endtime"] or input["starttime"] <= input["endtime"]:
             raise web.seeother("/new")
 
         model.new_event(input)

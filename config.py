@@ -10,10 +10,11 @@ import db
 urls = (
     '/', 'main.Index',
     '/(\d+)/(\d+)', 'main.View',
+    '/(\d+)/(\d+)/(\d+)', 'main.Day',
     '/new', 'main.New',
     '/delete/(\d+)', 'main.Delete',
     '/edit/(\d+)', 'main.Edit'
-    
+
 )
 
 app = web.application(urls, globals(), autoreload=False)
